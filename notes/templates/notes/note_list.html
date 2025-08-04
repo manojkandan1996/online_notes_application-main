@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Your Notes</h2>
+<a href="{% url 'note_create' %}" class="btn btn-success mb-3">+ Add Note</a>
+{% if object_list %}
+    <div class="list-group">
+        {% for note in object_list %}
+            <div class="list-group-item">
+                <h5>{{ note.title }}</h5>
+                <p>{{ note.content|linebreaks }}</p>
+                <small>Created: {{ note.created_at|date:"Y-m-d H:i" }} | Updated: {{ note.updated_at|date:"Y-m-d H:i" }}</small><br>
+                <a href="{% url 'note_update' note.pk %}" class="btn btn-sm btn-primary mt-2">Edit</a>
+                <a href="{% url 'note_delete' note.pk %}" class="btn btn-sm btn-danger mt-2">Delete</a>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No notes yet. <a href="{% url 'note_create' %}">Create your first note</a>.</p>
+{% endif %}
+{% endblock %}
